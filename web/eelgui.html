@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Eel Gui</title>
+		<script type='text/javascript' src='/eel.js'></script>
+		<script type='text/javascript'>
+
+		async function get_input() {
+			let input = document.getElementById('input-box').value;
+			let output_div = document.getElementById('output-box')
+
+			let output_string = await eel.get_output(input)();
+			output_div.innerHTML = output_string;
+		}
+
+		</script>
+
+	</head>
+	<body>
+		<input id='input-box' placeholder='test area' value='testString'></input>
+		<a href='javascript:void()' onclick='get_input()'>Submit</a>
+		<div id='output-box'>__________</div>
+	</body>
+</html>
