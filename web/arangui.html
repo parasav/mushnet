@@ -5,19 +5,31 @@
 		<script type='text/javascript' src='/eel.js'></script>
 		<script type='text/javascript'>
 
+		
 		async function get_input() {
 			let ip   = document.getElementById('ip-input').value;
 			let port = document.getElementById('port-input').value;
 			let user = document.getElementById('user-input').value;
 			let pass = document.getElementById('pass-input').value;
+			let newdb = document.getElementById('new-db-input').value;
 
 
 
+			let output_div = document.getElementById('output-box');
 
-			let output_div = document.getElementById('output-box')
+			let output_object = await eel.arangoConnect(ip, port, user, pass, newdb)();
 
-			let output_string = await eel.arangoConnect(ip, port, user, pass)();
-			output_div.innerHTML = output_string;
+			eel.js_console(output_object);
+
+			var full_output = 'Databases: <br>';
+			
+			
+			for (const i in output_object) {
+				eel.js_console(`${output_object[i]}`);
+				full_output += (`${output_object[i]}` + ',<br>');	
+			}
+
+			output_div.innerHTML = full_output + '<br> done';
 		}
 
 		</script>
@@ -35,6 +47,9 @@
 		<br>
 		Server Password:
 		<input id='pass-input' placeholder='password' value='toor'></input>
+		<br>
+		New Database:
+		<input id='new-db-input' placeholder='dbname' value='test'></input>
 		<br>
 
 

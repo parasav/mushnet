@@ -3,7 +3,7 @@ from arango import ArangoClient
 
 eel.init('web')
 @eel.expose
-def arangoConnect(getIp, getPort, getUser, getPass):
+def arangoConnect(getIp, getPort, getUser, getPass, getNewdb):
 	client = ArangoClient(
     	protocol='http',
     	host= getIp,
@@ -13,6 +13,19 @@ def arangoConnect(getIp, getPort, getUser, getPass):
    		enable_logging=True
 	)
 	print("connected?")
-	print(client.databases())
+	try:
+		client.create_database(getNewdb)
+		print('Created new db, '+ getNewdb)
+		return(client.databases())
+	except:
+		print('failed to create new DB, ' + getNewdb)
 
-eel.start('arangui.html', size=(400, 200))
+	print(client.databases())
+	return(client.databases())
+
+
+@eel.expose
+def js_console(x):
+	print(x)
+
+eel.start('arangui.html', size=(400, 400))

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>ArangoDB Gui</title>
+		<script type='text/javascript' src='/eel.js'></script>
+		<script type='text/javascript'>
+
+		async function get_input() {
+			let ip   = document.getElementById('ip-input').value;
+			let port = document.getElementById('port-input').value;
+			let user = document.getElementById('user-input').value;
+			let pass = document.getElementById('pass-input').value;
+
+
+
+
+			let output_div = document.getElementById('output-box')
+
+			let output_string = await eel.arangoConnect(ip, port, user, pass)();
+			output_div.innerHTML = output_string;
+		}
+
+		</script>
+
+	</head>
+	<body>
+		Server IP:
+		<input id='ip-input' placeholder='xxx.xxx.xxx.xxx' value='localhost'></input>
+		<br>
+		Server Port:
+		<input id='port-input' placeholder='xxxx' value='8529'></input>
+		<br>
+		Server Username:
+		<input id='user-input' placeholder='username' value='root'></input>
+		<br>
+		Server Password:
+		<input id='pass-input' placeholder='password' value='toor'></input>
+		<br>
+
+
+
+		<a href='javascript:void()' onclick='get_input()'>Print Databases</a>
+		<div id='output-box'>__________</div>
+	</body>
+</html>
